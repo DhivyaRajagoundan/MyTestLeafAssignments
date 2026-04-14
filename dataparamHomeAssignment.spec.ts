@@ -1,6 +1,12 @@
 import { expect, test } from '@playwright/test'
-import testdata from "../data/leaftap.json"
+//import testdata from "../data/leaftap.json"
+import {parse} from "csv-parse/sync"
+import fs from 'fs'
+import path from 'path'
 
+let value:any = parse(fs.readFileSync("data/testleaftap.csv"),{columns:true,skip_empty_lines:true})
+
+let testdata = value[0]
 test(`Data Parma Home Assignment ${testdata.TestCaseID}`, async ({ page }) => {
    await page.goto(testdata.URL);
    await page.getByRole('textbox', { name: 'Username' }).fill(testdata.UserName);
